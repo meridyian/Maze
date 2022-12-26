@@ -14,6 +14,10 @@ public class MazeConstructor : MonoBehaviour
     [SerializeField] private Material startMat;
     [SerializeField] private Material treasureMat;
     
+    // to store datagenerator
+    private MazeDataGenerator dataGenerator;
+    
+    
     // read-only outside this class, cant be modified from outside
     public int[,] data
     {
@@ -22,6 +26,8 @@ public class MazeConstructor : MonoBehaviour
 
     void Awake()
     {
+
+        dataGenerator = new MazeDataGenerator();
         // default to walls surrounding a single empty cell
         data = new int[,]
         {
@@ -34,7 +40,13 @@ public class MazeConstructor : MonoBehaviour
 
     public void GenerateNewMaze(int sizeRows, int sizeCols)
     {
-        // stub to fill in
+        if (sizeRows % 2 == 0 && sizeCols % 2 == 0)
+        {
+            Debug.LogError("Odd numbers work better for dungeon size");
+            
+        }
+
+        data = dataGenerator.FromDimensions(sizeRows, sizeCols);
     }
     
     // to display
